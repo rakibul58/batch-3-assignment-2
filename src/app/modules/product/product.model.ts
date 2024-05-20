@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { TInventory, TProduct, TVariant } from './product.interface'
 
+//Schema for variant field
 const variantSchema = new Schema<TVariant>({
   type: {
     type: String,
@@ -18,6 +19,7 @@ const variantSchema = new Schema<TVariant>({
   },
 })
 
+//schema for inventory field
 const inventorySchema = new Schema<TInventory>({
   quantity: {
     type: Number,
@@ -27,9 +29,11 @@ const inventorySchema = new Schema<TInventory>({
   inStock: {
     type: Boolean,
     default: true,
+    required: [true, 'isStock is Required.'],
   },
 })
 
+//schema of product
 const productSchema = new Schema<TProduct>(
   {
     name: {
@@ -76,7 +80,7 @@ const productSchema = new Schema<TProduct>(
     },
   },
   {
-    timestamps: true, // create timestamps
+    timestamps: true, // creates timestamps
   },
 )
 

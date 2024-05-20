@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+//validation for variant field
 const variantValidationSchema = z.object({
   type: z
     .string({ required_error: 'Variant type is required.' })
@@ -13,13 +14,15 @@ const variantValidationSchema = z.object({
     .max(20, 'Variant value must be between 2 and 20 characters.'),
 })
 
+//validation for inventory field
 const inventoryValidationSchema = z.object({
   quantity: z
     .number({ required_error: 'Inventory Quantity is required.' })
     .positive('Quantity must be at least 1'),
-  inStock: z.boolean().default(true).optional(),
+  inStock: z.boolean().default(true),
 })
 
+//validation for product model
 export const productValidationSchema = z.object({
   name: z
     .string({ required_error: 'Name is Required.' })
@@ -47,3 +50,6 @@ export const productValidationSchema = z.object({
   variants: z.array(variantValidationSchema),
   inventory: inventoryValidationSchema,
 })
+
+//exporting productValidationSchema
+export default productValidationSchema
