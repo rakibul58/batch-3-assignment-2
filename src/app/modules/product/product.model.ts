@@ -5,23 +5,23 @@ const variantSchema = new Schema<TVariant>({
   type: {
     type: String,
     trim: true,
-    required: [true, 'Type is Required.'],
-    maxlength: [20, "Type can't be over 20 characters."],
-    minlength: [2, "Type can't be under 2 characters."],
+    required: [true, 'Variant type is Required.'],
+    maxlength: [20, "Variant type can't be over 20 characters."],
+    minlength: [2, "Variant type can't be under 2 characters."],
   },
   value: {
     type: String,
     trim: true,
-    required: [true, 'Value is Required'],
-    maxlength: [20, "Value can't be over 20 characters."],
-    minlength: [2, "Value can't be under 2 characters."],
+    required: [true, 'Variant value is Required'],
+    maxlength: [20, "Variant value can't be over 20 characters."],
+    minlength: [2, "Variant value can't be under 2 characters."],
   },
 })
 
 const inventorySchema = new Schema<TInventory>({
   quantity: {
     type: Number,
-    required: [true, 'Quantity is Required.'],
+    required: [true, 'Inventory Quantity is Required.'],
     min: [1, 'Have to add at least one quantity to add product.'],
   },
   inStock: {
@@ -41,6 +41,7 @@ const productSchema = new Schema<TProduct>(
     },
     description: {
       type: String,
+      required: true,
       trim: true,
       maxlength: [400, "Description can't be over 400 characters."],
       minlength: [2, "Description can't be under 2 characters."],
