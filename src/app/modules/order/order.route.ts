@@ -3,6 +3,9 @@ import { OrderControllers } from './order.controller'
 
 const router = express.Router()
 
-router.route('/').post(OrderControllers.createAnOrder)
+router
+  .route('/')
+  .get(OrderControllers.getOrders)
+  .post(OrderControllers.createAnOrder)
 
 export const OrderRoutes = router

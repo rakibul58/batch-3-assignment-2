@@ -1,11 +1,5 @@
-import { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import { z } from 'zod'
-
-// Define the ObjectId validation function
-const objectId = z.string().refine(val => Types.ObjectId.isValid(val), {
-  message: 'Invalid ObjectId',
-})
-
 //validation for variant field
 const orderValidationSchema = z.object({
   email: z
@@ -13,7 +7,9 @@ const orderValidationSchema = z.object({
     .trim()
     .toLowerCase()
     .email('Not a valid email.'),
-  productId: objectId,
+  productId: z.string().refine(val => {
+    return mongoose.Types.ObjectId.isValid(val)
+  }),
   price: z
     .number({ required_error: 'Price is required.' })
     .min(0, 'Price can not be negative.'),

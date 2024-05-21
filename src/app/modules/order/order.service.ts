@@ -68,7 +68,14 @@ const createAnOrderInDB = async (orderData: TOrder) => {
   }
 }
 
+// get orders from db
+const getOrdersFromDB = async (query: object) => {
+  const orders = await Order.find(query)
+  return orders
+}
+
 // exporting services
 export const OrderServices = {
   createAnOrderInDB,
+  getOrdersFromDB,
 }

@@ -1,9 +1,7 @@
-import { Schema } from 'mongoose'
-
 // Type of orders
 export type TOrder = {
   email: string
-  productId: Schema.Types.ObjectId
+  productId: string
   price: number
   quantity: number
 }
