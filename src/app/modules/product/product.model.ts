@@ -66,7 +66,7 @@ const productSchema = new Schema<TProduct>(
         type: String,
         trim: true,
         maxlength: [20, "Tag can't be over 20 characters."],
-      },
+      }
     ],
     variants: [
       {

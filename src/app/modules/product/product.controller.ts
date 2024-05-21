@@ -5,7 +5,9 @@ import { ProductServices } from './product.service'
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body
+    // sending product data to zod validation
     const zodParsedData = productValidationSchema.parse(productData)
+    // if validation is successful then sending the data to product services
     const result = await ProductServices.createProductIntoDB(zodParsedData)
     res.status(200).json({
       success: true,
@@ -21,6 +23,7 @@ const createProduct = async (req: Request, res: Response) => {
   }
 }
 
+// exporting controllers
 export const ProductControllers = {
   createProduct,
 }

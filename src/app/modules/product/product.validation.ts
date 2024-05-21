@@ -46,8 +46,8 @@ export const productValidationSchema = z.object({
       .string({ required_error: 'Tag is required.' })
       .trim()
       .max(20, 'Tag cannot be over 20 characters'),
-  ),
-  variants: z.array(variantValidationSchema),
+  ).min(1, "Add at least one tag."),
+  variants: z.array(variantValidationSchema).min(1, "Add at least one variant."),
   inventory: inventoryValidationSchema,
 })
 
