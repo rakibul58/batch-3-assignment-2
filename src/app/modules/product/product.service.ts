@@ -11,8 +11,19 @@ const createProductIntoDB = async (productData: TProduct) => {
 }
 
 // gets all products from database
-const getProductsFromDB = async (filter: object) => {
-  const result = await Product.find(filter)
+const getProductsFromDB = async (filter: object, matchTerm: string) => {
+  const result = await Product.find({
+    ...filter,
+    // matches search term with the following field
+    $or: [
+      { name: { $regex: matchTerm, $options: 'i' } },
+      { description: { $regex: matchTerm, $options: 'i' } },
+      { category: { $regex: matchTerm, $options: 'i' } },
+      { tags: { $regex: matchTerm, $options: 'i' } },
+      { 'variants.type': { $regex: matchTerm, $options: 'i' } },
+      { 'variants.value': { $regex: matchTerm, $options: 'i' } },
+    ],
+  })
   return result
 }
 
@@ -22,7 +33,7 @@ const getProductByProductIdFromDB = async (productId: string) => {
   return result
 }
 
-// gets a product from database
+// updates a product from database
 const updateProductByProductIdInDB = async (
   productId: string,
   updateData: object,
@@ -38,10 +49,18 @@ const updateProductByProductIdInDB = async (
   return { updateResult, updatedData }
 }
 
+// deletes a product from db
+const deleteProductByProductIdInDB = async (productId: string) => {
+  const deleteResult = await Product.deleteOne({ _id: new ObjectId(productId) })
+  const deletedData = await Product.findOne({ _id: new ObjectId(productId) })
+  return { deleteResult, deletedData }
+}
+
 // exporting services
 export const ProductServices = {
   createProductIntoDB,
   getProductsFromDB,
   getProductByProductIdFromDB,
   updateProductByProductIdInDB,
+  deleteProductByProductIdInDB,
 }

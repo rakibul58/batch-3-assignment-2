@@ -45,12 +45,37 @@ const createProduct = async (req: Request, res: Response) => {
 const getProducts = async (req: Request, res: Response) => {
   try {
     const query = req.query
-    const result = await ProductServices.getProductsFromDB(query)
-    res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully!',
-      data: result,
-    })
+    let matchTerm: string = ''
+    if ('searchTerm' in query) {
+      matchTerm = query.searchTerm as string
+      delete query.searchTerm
+    }
+
+    const result = await ProductServices.getProductsFromDB(
+      query,
+      matchTerm as string,
+    )
+
+    if (result.length && matchTerm.length) {
+      return res.status(200).json({
+        success: true,
+        message: `Products matching search term '${matchTerm}' fetched successfully!`,
+        data: result,
+      })
+    }
+
+    if (result.length) {
+      res.status(200).json({
+        success: true,
+        message: 'Products fetched successfully!',
+        data: result,
+      })
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'No Product found!',
+      })
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -157,10 +182,36 @@ const updateProductByProductId = async (req: Request, res: Response) => {
   }
 }
 
+const deleteProductByProductId = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params
+    const result = await ProductServices.deleteProductByProductIdInDB(productId)
+    if (result.deleteResult.deletedCount) {
+      res.status(200).json({
+        success: true,
+        message: 'Product deleted successfully!',
+        data: result.deletedData,
+      })
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Product not found!',
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong!',
+      error,
+    })
+  }
+}
+
 // exporting controllers
 export const ProductControllers = {
   createProduct,
   getProducts,
   getProductByProductId,
   updateProductByProductId,
+  deleteProductByProductId,
 }
