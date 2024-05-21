@@ -56,7 +56,9 @@ const getProducts = async (req: Request, res: Response) => {
       matchTerm as string,
     )
 
+    // if there is a searchTerm will send a different response message
     if (result.length && matchTerm.length) {
+      // returning so that code after that will not execute
       return res.status(200).json({
         success: true,
         message: `Products matching search term '${matchTerm}' fetched successfully!`,
