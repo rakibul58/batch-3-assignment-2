@@ -15,7 +15,7 @@ const variantSchema = new Schema<TVariant>({
     trim: true,
     required: [true, 'Variant value is Required'],
     maxlength: [20, "Variant value can't be over 20 characters."],
-    minlength: [2, "Variant value can't be under 2 characters."],
+    minlength: [1, "Variant value can't be under 1 characters."],
   },
 })
 
@@ -66,7 +66,7 @@ const productSchema = new Schema<TProduct>(
         type: String,
         trim: true,
         maxlength: [20, "Tag can't be over 20 characters."],
-      }
+      },
     ],
     variants: [
       {

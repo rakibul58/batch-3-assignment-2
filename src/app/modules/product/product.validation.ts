@@ -10,8 +10,8 @@ const variantValidationSchema = z.object({
   value: z
     .string({ required_error: 'Variant value is required.' })
     .trim()
-    .min(2, 'Variant value must be between 2 and 20 characters.')
-    .max(20, 'Variant value must be between 2 and 20 characters.'),
+    .min(1, 'Variant value must be between 1 and 20 characters.')
+    .max(20, 'Variant value must be between 1 and 20 characters.'),
 })
 
 //validation for inventory field
@@ -41,13 +41,17 @@ export const productValidationSchema = z.object({
     .string({ required_error: 'Category is required.' })
     .trim()
     .max(50, 'Category cannot be over 50 characters.'),
-  tags: z.array(
-    z
-      .string({ required_error: 'Tag is required.' })
-      .trim()
-      .max(20, 'Tag cannot be over 20 characters'),
-  ).min(1, "Add at least one tag."),
-  variants: z.array(variantValidationSchema).min(1, "Add at least one variant."),
+  tags: z
+    .array(
+      z
+        .string({ required_error: 'Tag is required.' })
+        .trim()
+        .max(20, 'Tag cannot be over 20 characters'),
+    )
+    .min(1, 'Add at least one tag.'),
+  variants: z
+    .array(variantValidationSchema)
+    .min(1, 'Add at least one variant.'),
   inventory: inventoryValidationSchema,
 })
 
