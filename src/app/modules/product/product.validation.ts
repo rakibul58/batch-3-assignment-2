@@ -18,8 +18,8 @@ const variantValidationSchema = z.object({
 const inventoryValidationSchema = z.object({
   quantity: z
     .number({ required_error: 'Inventory Quantity is required.' })
-    .positive('Quantity must be at least 1'),
-  inStock: z.boolean().default(true),
+    .min(0, 'Quantity can not be negative'),
+  inStock: z.boolean({ required_error: 'Inventory inStock is required.' }),
 })
 
 //validation for product model

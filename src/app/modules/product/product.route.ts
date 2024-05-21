@@ -7,6 +7,9 @@ router
   .route('/')
   .get(ProductControllers.getProducts)
   .post(ProductControllers.createProduct)
-router.route('/:productId').get(ProductControllers.getProductByProductId)
+router
+  .route('/:productId')
+  .get(ProductControllers.getProductByProductId)
+  .put(ProductControllers.updateProductByProductId)
 
 export const ProductRoutes = router

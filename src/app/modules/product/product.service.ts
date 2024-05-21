@@ -1,5 +1,7 @@
+import mongoose from 'mongoose'
 import { TProduct } from './product.interface'
 import { Product } from './product.model'
+const { ObjectId } = mongoose.Types
 
 // creates a product on database
 const createProductIntoDB = async (productData: TProduct) => {
@@ -20,9 +22,26 @@ const getProductByProductIdFromDB = async (productId: string) => {
   return result
 }
 
+// gets a product from database
+const updateProductByProductIdInDB = async (
+  productId: string,
+  updateData: object,
+) => {
+  const updateResult = await Product.updateOne(
+    { _id: new ObjectId(productId) },
+    { $set: updateData },
+    {
+      runValidators: true,
+    },
+  )
+  const updatedData = await Product.findById(productId)
+  return { updateResult, updatedData }
+}
+
 // exporting services
 export const ProductServices = {
   createProductIntoDB,
   getProductsFromDB,
   getProductByProductIdFromDB,
+  updateProductByProductIdInDB,
 }

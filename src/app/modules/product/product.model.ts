@@ -24,12 +24,11 @@ const inventorySchema = new Schema<TInventory>({
   quantity: {
     type: Number,
     required: [true, 'Inventory Quantity is Required.'],
-    min: [1, 'Have to add at least one quantity to add product.'],
+    min: [0, 'Quantity can not be negative'],
   },
   inStock: {
     type: Boolean,
-    default: true,
-    required: [true, 'isStock is Required.'],
+    required: [true, 'inStock is Required.'],
   },
 })
 
