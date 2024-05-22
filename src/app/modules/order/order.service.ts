@@ -41,7 +41,7 @@ const createAnOrderInDB = async (orderData: TOrder) => {
       productData,
       createResult,
       updateResult,
-      message: 'Requested quantity is not available!',
+      message: 'Insufficient quantity available in inventory!',
     }
   }
   // Creates the order

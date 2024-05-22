@@ -12,8 +12,8 @@ const orderSchema = new Schema<TOrder>(
       minlength: [3, 'Not a valid email.'],
     },
     productId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
+      type: String,
+      required: [true, 'Product id is required.'],
     },
     price: {
       type: Number,

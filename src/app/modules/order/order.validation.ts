@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { z } from 'zod'
 //validation for variant field
 const orderValidationSchema = z.object({
@@ -7,9 +6,7 @@ const orderValidationSchema = z.object({
     .trim()
     .toLowerCase()
     .email('Not a valid email.'),
-  productId: z.string().refine(val => {
-    return mongoose.Types.ObjectId.isValid(val)
-  }),
+  productId: z.string({ required_error: 'Product id is required.' }),
   price: z
     .number({ required_error: 'Price is required.' })
     .min(0, 'Price can not be negative.'),
